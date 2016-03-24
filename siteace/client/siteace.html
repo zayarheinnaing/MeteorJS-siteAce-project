@@ -1,0 +1,133 @@
+<head>
+  <title>siteace</title>
+</head>
+
+<body>
+	<!-- navbar  - you will be putting the login functions here -->
+
+	<!--{{>navbar}}-->
+	<!--<div class="container">
+		{{> website_form}}
+		{{> website_list}}
+	</div>-->
+</body>
+
+<template name="ApplicationLayout">
+	{{> yield "navbar"}}
+	{{> yield "form"}}
+	{{> yield "main"}}
+</template>
+
+<template name="navbar">
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header container">
+				<a class="navbar-brand" href="#">
+					Site Ace
+				</a>
+
+				<div class="navbar-brand navbar-right">{{> loginButtons align="right"}}</div>
+			</div>
+		</div>
+	</nav>
+</template>
+
+
+<template name="website_form">
+	<div class="container">
+		{{#if currentUser}}
+		<a class="btn btn-default js-toggle-website-form" href="#">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</a>
+		{{/if}}
+		<div id="website_form" class="hidden_div">
+			<form class="js-save-website-form">
+			  <div class="form-group">
+				<label for="url">Site address</label>
+				<input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+			  </div>
+			  <div class="form-group">
+				<label for="title">Title</label>
+				<input type="text" class="form-control" id="title" placeholder="Mysite">
+			  </div>
+				<div class="form-group">
+				<label for="description">Description</label>
+				<input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+			  </div>
+
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+	</div>
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+		<div class="container">
+			<ol>
+			{{#each websites}}
+			{{>website_item}}
+			{{/each}}
+			</ol>
+		</div>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+		<li>
+			<a href="website_item/{{_id}}">{{title}}</a>
+			<p>
+				{{description}}
+				<br/>
+				{{createOn}}
+			</p>
+			<a href="#" class="btn btn-default js-upvote">
+				<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> {{upvote}}</span>
+			</a>
+			<a href="#" class="btn btn-default js-downvote">
+				<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> {{downvote}}</span>
+			</a>
+			<!-- you will be putting your up and down vote buttons in here! -->
+		</li>
+</template>
+
+<template name="website_detail">
+	<div class="container">
+		<div class="container">
+			<a href="../" class="btn btn-info js-back"><span class="glyphicon glyphicon-arrow-left"> Back</span></a>
+			<h1>{{title}}</h1>
+			<a href="#" class="btn btn-default js-upvote">
+				<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> {{upvote}}</span>
+			</a>
+			<a href="#" class="btn btn-default js-downvote">
+				<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> {{downvote}}</span>
+			</a>
+			<p>
+				<a href="{{url}}">{{url}}</a>
+			</p>
+			<p>Add By:
+				{{#if addBy}}
+					<a href="#" class="js-user-filter">{{getUser addBy}}</a>
+				{{else}}
+					{{getUser addBy}}
+				{{/if}}
+				on {{createOn}}</p>
+			<p>{{description}}</p>
+		</div>
+		<div class="container">
+			<h3>Comments</h3>
+			<form class="form-inline js-comment-form">
+				<textarea class="form-control" id="comment" placeholder="Comments..." name="comment" style="width: 70%"></textarea>
+				<button type="submit" class="btn btn-default js-comment">Submit</button>
+			</form>
+			<div style="width: 70%">
+				{{#each comments}}
+					<div class="comments">
+						<div>{{comment}}</div>
+						<div class="small">{{createOn}}</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>

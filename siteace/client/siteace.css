@@ -1,0 +1,13 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+
+.comments{
+	border: 1px solid rgba(0,0,0,0.1);
+	background-color: ghostwhite;
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 5px;
+
+}
